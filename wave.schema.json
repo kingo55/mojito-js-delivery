@@ -25,6 +25,13 @@
             "minimum": 0,
             "maximum": 1
         },
+        "excludeSampleRate": {
+            "title": "Sample rate to exclude",
+            "description": "For partitioned ramping: When you need to exclude users of the canary release from entering the primary test release",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
         "divertTo": {
             "title": "Divert to recipe",
             "description": "Divert all traffic in this test to a specified recipe ID",
@@ -107,8 +114,38 @@
             "title": "Manual exposure",
             "description": "Controls whether exposure tracking will be handled manually (i.e. within the variant code, or automatically, upon assignment)",
             "type": "boolean"
+        },
+        "private": {
+            "title": "Private metadata",
+            "description": "Any data assigned to the 'private' key in YAML configurations will not be built into the container during the build process",
+            "type": "object"
+        },
+        "options": {
+            "title": "Options object",
+            "description": "Override library defaults per test",
+            "type": "object",
+            "properties": {
+                "debug": {
+                    "title": "Debug mode",
+                    "description": "Whether the test object outputs debig messages to the console",
+                    "type": "boolean"
+                },
+                "cookieDuration": {
+                    "title": "Cookie duration",
+                    "description": "The time in days that the test object's cookies are stored for",
+                    "type": "number",
+                    "minimum": -1,
+                    "maximum": 10000
+                },
+                "excluded": {
+                    "title": "Default exclusion rule",
+                    "description": "A blanket override that can exclude users. Commonly used to exclude unsupported useragents across all experiments. This can be overriden on a test-per-test basis here too.",
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": false
         }
     },
-    "required": ["id", "name", "recipes", "state", "sampleRate", "trigger"],
+    "required": ["id", "name", "recipes", "state", "sampleRate"],
     "additionalProperties": true
 }
